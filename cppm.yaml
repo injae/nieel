@@ -1,0 +1,6 @@
+project:
+  name: nieel
+  version: 0.0.1
+  type: static
+  compiler: ""
+  builder: make
