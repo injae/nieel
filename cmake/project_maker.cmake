@@ -59,7 +59,6 @@ function(install_library_config name)
         PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
     )
     
-    message("${name}")
     #set_target_properties(${name} PROPERTIES
     #    VERSION ${${name}_VERSION}
     #    SOVERSION 1

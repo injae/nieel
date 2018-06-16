@@ -18,6 +18,14 @@ public:
             parser_type             make_parser(std::vector<std::string>& options); 
             po::options_description description() { return desc_; }
             std::vector<std::string> get_subarg();
+            template<typename OPTION>
+            OPTION make_sub_command() {
+                auto opts = po::collect_unrecognized(make_parser().options, po::include_positional);
+                opts.erase(opts.begin());
+                auto option = OPTION(argc_,argv_);
+                option.regist(opts); 
+                return option;
+            }
              
         
     Option(const std::string descripte, int argc, char* argv[]) 
