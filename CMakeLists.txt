@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.6)
-project(nieel LANGUAGES CXX VERSION 0.0.0.1)
+
+project(nieel LANGUAGES CXX VERSION 0.0.1)
 
 set(PROJECT_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(SOURCE_DIR ${PROJECT_ROOT_DIR}/src)
@@ -13,7 +14,9 @@ set(MODULE_PATH ${CMAKE_MODULE_PATH}/Modules)
 set(BUILD_DIR ${PROJECT_NAME}/build)
 set(third_party_library  )
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ")
 include(${CMAKE_MODULE_PATH}/cmake_option.cmake)
 include(${CMAKE_MODULE_PATH}/project_maker.cmake)
-#make_static_shared_lib(${PROJECT_NAME})
 make_lib(${PROJECT_NAME})
+
+
