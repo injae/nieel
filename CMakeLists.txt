@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.6)
-set(PROJECT_NAME nieel)
-set(nieel_VERSION 0.0.1)
-project(${PROJECT_NAME})
+project(nieel LANGUAGES CXX VERSION 0.0.0.1)
 
 set(PROJECT_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(SOURCE_DIR ${PROJECT_ROOT_DIR}/src)
@@ -17,4 +15,5 @@ set(third_party_library  )
 
 include(${CMAKE_MODULE_PATH}/cmake_option.cmake)
 include(${CMAKE_MODULE_PATH}/project_maker.cmake)
-make_static_lib(${PROJECT_NAME})
+#make_static_shared_lib(${PROJECT_NAME})
+make_lib(${PROJECT_NAME})

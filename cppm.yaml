@@ -3,9 +3,8 @@ project:
     version: 0.0.1
     authors: 8687lee@gmail.com InJaeLee
     type: static
-    compiler: gcc-7.3 
-    builder: make
-    
+    compiler: g++ 
+    builder: ninja 
     
     thirdparty:
         boost: 
