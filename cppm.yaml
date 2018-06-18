@@ -2,9 +2,10 @@ project:
     name: nieel
     version: 0.0.1
     authors: 8687lee@gmail.com InJaeLee
-    type: static
+    type: shared
     compiler: g++ 
-    builder: ninja 
+    compiler-option: -std=c++17 -lstdc++fs -g -Wall -pthread -fPIC
+    builder: make 
     
     thirdparty:
         boost: 
