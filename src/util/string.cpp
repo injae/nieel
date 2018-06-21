@@ -1,6 +1,6 @@
-#include"util/string.h"
+#include"util/string.hpp"
 
-namespace nieel::util
+namespace nieel
 {
     bool has_str(std::string& target, std::string_view str) {
         std::size_t pos = 0;
