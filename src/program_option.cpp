@@ -1,5 +1,6 @@
 #include"program_option.h"
 #include<iostream>
+#include<sstream>
 
 namespace nieel 
 {
@@ -29,7 +30,7 @@ namespace nieel
         po::notify(vm_);
     }
     
-    parser_type Option::make_parser() {
+    po::parsed_options Option::make_parser() {
         return  po::command_line_parser(argc_, argv_)
                .options(desc_)
                .positional(make_command_option())
@@ -37,7 +38,7 @@ namespace nieel
                .run();
     }
     
-    parser_type Option::make_parser(std::vector<std::string>& options) {
+    po::parsed_options Option::make_parser(std::vector<std::string>& options) {
         return  po::command_line_parser(options)
                .options(desc_)
                .positional(make_command_option())
@@ -45,22 +46,48 @@ namespace nieel
                .run();
     }
     
+    std::vector<std::string> Option::get_argument_list(const std::vector<po::option>& raw) {
+        std::vector<std::string> args;
+    
+        for(const boost::program_options::option& option : raw)
+        {
+            if(option.unregistered) continue; // Skipping unknown options
+    
+            if(option.value.empty())
+                args.push_back("--" + option.string_key);
+            else
+            {
+                // this loses order of positional options
+                for(const std::string& value : option.value)
+                {
+                    if(option.string_key == value) continue;
+                    //args.push_back(option.string_key);
+                    args.push_back(value);
+                }
+            }
+        }
+    
+        return args;
+    }
+    
     std::vector<std::string> Option::get_subarg() {
        if(!vm_.count("subargs")) return std::vector<std::string>();
        return vm_["subargs"].as<std::vector<std::string>>();
     }
     
-    SubOptions& SubOptions::operator()(option::type type, std::string name, std::function<void()> func) {
+    SubOptions& SubOptions::operator()(option::type type, std::string name
+                                      ,std::function<void()> func, std::string descripte) {
         if(type == option::type::option)  {
-            options_.emplace_back(std::move(std::make_pair(name, func)));
+            options_.emplace_back(std::move(std::make_tuple(name, func, descripte)));
         }
         if(type == option::type::command) {
-            commands_.emplace_back(std::move(std::make_pair(name, func)));
+            commands_.emplace_back(std::move(std::make_tuple(name, func, descripte)));
         }  
         return *this;
     }
     
-    SubOptions& SubOptions::operator()(option::type type, std::function<void()> func) {
+    SubOptions& SubOptions::operator()(option::type type, std::function<void()> func
+                                      ,std::string descripte) {
         if(type == option::type::default_option) {
             default_option_ = std::move(func);
         }
@@ -70,16 +97,18 @@ namespace nieel
         return *this;
     }
     
-    SubOptions& SubOptions::operator()(option::type type, std::string name, std::function<void(std::string&)> func) {
+    SubOptions& SubOptions::operator()(option::type type, std::string name
+                                      ,std::function<void(std::string&)> func, std::string descripte) {
         if(type == option::type::command) {
-            commands_.emplace_back(std::move(std::make_pair(name, [this, &func](){
+            commands_.emplace_back(std::move(std::make_tuple(name, [this, &func](){
               auto cmd = vm_["command"].as<std::string>();
               func(cmd);
-            })));
+            }, descripte)));
         }  
         return *this;
     }
-    SubOptions& SubOptions::operator()(option::type type, std::function<void(std::string&)> func) {
+    SubOptions& SubOptions::operator()(option::type type, std::function<void(std::string&)> func
+                                      ,std::string descripte) {
         if(type == option::type::default_command) {
             default_command_ = std::move([this, &func](){
               auto cmd = vm_["command"].as<std::string>();
@@ -89,24 +118,31 @@ namespace nieel
         return *this;
     }
     
-    
     void SubOptions::run() {
         if(vm_.count("command")) { auto cmd = vm_["command"].as<std::string>();
-            for(auto& command : commands_) {
-                if(cmd == command.first) {
-                    command.second();
-                    goto option;
+            std::cout << cmd << std::endl;
+            for(auto& [name, command, _] : commands_) {
+                if(cmd == name) {
+                    command(); return ;
                 }
             }
             default_command_(); 
         }
-        option:
-        for(auto& option : options_) {
-            if(vm_.count(option.first)) {
-                option.second(); 
-                return;
+        for(auto& [name, option, _] : options_) {
+            if(vm_.count(name)) {
+                option();  return;
             }
         }
         default_option_(); 
+    }
+    
+    std::string SubOptions::command_description(std::string description) {
+        std::stringstream output("");
+        if(commands_.empty()) return output.str();
+        output << description << ": \n";
+        for(auto& [name, _, des] : commands_) {
+            output << "  " << name + "\t\t\t" + des << "\n";
+        }
+        return output.str();
     }
 }

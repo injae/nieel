@@ -8,6 +8,7 @@
 #include<vector>
 #include<functional>
 #include<string>
+#include<algorithm>
 
 namespace po = boost::program_options;
 
@@ -29,23 +30,24 @@ namespace nieel
     
     class SubOptions
     {
-    using list_type = std::pair<std::string, std::function<void()>>;
+    using list_type = std::tuple<std::string, std::function<void()>, std::string>;
     public:
         SubOptions(po::variables_map& vm) : vm_(vm), default_option_([](){}), default_command_([](){}) {}
-        SubOptions& operator()(option::type type, std::function<void(std::string&)> func);
-        SubOptions& operator()(option::type type, std::function<void()> func); 
-        SubOptions& operator()(option::type type, std::string name, std::function<void()> func);
-        SubOptions& operator()(option::type type, std::string name, std::function<void(std::string&)> func);
+        SubOptions& operator()(option::type type, std::function<void(std::string&)> func, std::string descripte = "");
+        SubOptions& operator()(option::type type, std::function<void()> func            , std::string descripte = ""); 
+        SubOptions& operator()(option::type type, std::string name, std::function<void()> func            , std::string descripte = "");
+        SubOptions& operator()(option::type type, std::string name, std::function<void(std::string&)> func, std::string descripte = "");
         void run();
+        std::string command_description(std::string description);
     private:
-        po::variables_map vm_;
+        po::variables_map& vm_;
         std::vector<list_type> options_;
         std::vector<list_type> commands_;
         std::function<void()> default_option_; 
         std::function<void()> default_command_; 
     };
     
-    typedef po::basic_parsed_options<char> parser_type;
+    typedef po::parsed_options parser_type;
     
     class Option
     {
@@ -53,27 +55,36 @@ namespace nieel
         virtual void                    run() = 0;
                 void                    regist();
                 void                    regist(std::vector<std::string>& options);
-                parser_type             make_parser();
-                parser_type             make_parser(std::vector<std::string>& options); 
+                po::parsed_options      make_parser();
+                po::parsed_options      make_parser(std::vector<std::string>& options); 
                 po::options_description description() { return desc_; } 
+                std::vector<std::string> get_argument_list(const std::vector<po::option>& raw);
                 std::vector<std::string> get_subarg();
                 template<typename OPTION>
                 OPTION make_sub_command() {
                     auto opts = po::collect_unrecognized(make_parser().options, po::include_positional);
-                    opts.erase(opts.begin());
+                    auto list = get_argument_list(make_parser().options);
+                    for(auto& option : opts) {
+                        if(std::find(list.begin(), list.end(), option) == list.end()) 
+                            list.push_back(option);
+                        else
+                            list.erase(std::remove(list.begin(), list.end(), option));
+                    } 
+                    
                     auto option = OPTION(argc_,argv_);
-                    option.regist(opts); 
+                    option.regist(list); 
                     return option;
                 }
             
         Option(const std::string descripte, int argc, char* argv[]) 
-            : desc_(descripte), visible_option_(desc_), argc_(argc), argv_(argv) {}
+            : desc_(descripte), visible_option_(), sub_options_(vm_), argc_(argc), argv_(argv) {}
         virtual ~Option() {}
         
     protected:
         po::variables_map vm_;
         po::options_description desc_;
         po::options_description visible_option_;
+        SubOptions sub_options_;
         int    argc_;
         char** argv_;
     };
