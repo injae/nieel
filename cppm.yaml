@@ -3,9 +3,11 @@ package:
     version: 0.0.1
     authors: 8687lee@gmail.com InJaeLee
     type: static 
+    
 compiler: 
    type: g++ 
    option: -std=c++17 -lstdc++fs -g -Wall -pthread -fPIC
+   
 builder:  
     type: make
     core: 1
@@ -17,8 +19,7 @@ library:
             - src/ 
         dependencies: 
             - boost
-            - range-v3
-    
+
 thirdparty:
     boost: 
         build-type: static

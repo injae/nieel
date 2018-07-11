@@ -120,7 +120,6 @@ namespace nieel
     
     void SubOptions::run() {
         if(vm_.count("command")) { auto cmd = vm_["command"].as<std::string>();
-            std::cout << cmd << std::endl;
             for(auto& [name, command, _] : commands_) {
                 if(cmd == name) {
                     command(); return ;

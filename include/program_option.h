@@ -8,7 +8,7 @@
 #include<vector>
 #include<functional>
 #include<string>
-#include<algorithm>
+#include"algorithm.hpp"
 
 namespace po = boost::program_options;
 
@@ -65,10 +65,10 @@ namespace nieel
                     auto opts = po::collect_unrecognized(make_parser().options, po::include_positional);
                     auto list = get_argument_list(make_parser().options);
                     for(auto& option : opts) {
-                        if(std::find(list.begin(), list.end(), option) == list.end()) 
+                        if(nieel::find(list, option) == list.end()) 
                             list.push_back(option);
                         else
-                            list.erase(std::remove(list.begin(), list.end(), option));
+                            list.erase(nieel::remove(list, option));
                     } 
                     
                     auto option = OPTION(argc_,argv_);

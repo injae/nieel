@@ -9,7 +9,21 @@ namespace nieel
         return list;    
     }
     
-    optional<fs::path> find_file(const fs::path& path, const std::string& file_name) {
+    optional<fs::path> find_file(const fs::path& path, const std::string file_name) {
+        if(!fs::exists(path)) return none; 
+        
+        auto list = file_list(path);
+        if(!list) return none; 
+        
+        for(const auto& file : list.get()) {
+          if(file.path().filename() == file_name) return file.path();
+          if(fs::is_directory(file)) 
+            if(auto f = find_file(file, file_name)) return f;
+        }
+        return none;
+    }
+    
+    optional<fs::path> reverse_find_file(const fs::path& path, const std::string file_name) {
         if(!fs::exists(path)) return none; 
         
         auto list = file_list(path);

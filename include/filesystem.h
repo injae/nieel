@@ -19,7 +19,8 @@ namespace nieel
     void recursive_copy(const fs::path& src, const fs::path& dst);
     
     std::vector<std::string>                   find_regex_files(std::string path, boost::regex filter);
-    optional<fs::path>                         find_file(const fs::path& path, const std::string& file_name);
+    optional<fs::path>                         find_file(const fs::path& path, const std::string file_name);
+    optional<fs::path>                         reverse_find_file(const fs::path& path, const std::string file_name);
     optional<std::vector<fs::directory_entry>> file_list(const fs::path& path);
 }
 

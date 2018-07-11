@@ -6,17 +6,26 @@
 
 namespace nieel
 {
-    uint64_t constexpr mix(char m, uint64_t s) {
+    constexpr uint64_t mix(char m, uint64_t s) {
         return ((s<<7) + ~(s>>3)) + ~m;
     }
      
-    uint64_t constexpr hash(const char * m) {
+    constexpr uint64_t hash(const char * m) {
         return (*m) ? mix(*m,hash(m+1)) : 0;
     }
     
     inline uint64_t hash(const std::string& str) {
         return hash(str.c_str());
     }
+    
+    inline constexpr uint64_t operator "" _h(const char* str, std::size_t size) {
+        return hash(str);
+    }
+    
+    inline constexpr uint64_t operator "" _h(const char* str) {
+        return hash(str);
+    }
+    
 }
 
 #endif

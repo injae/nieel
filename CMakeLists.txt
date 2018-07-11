@@ -10,7 +10,7 @@ include(${CMAKE_MODULE_PATH}/cmake_option.cmake)
 include(${CMAKE_MODULE_PATH}/project_makerv2.cmake)
 include(${CMAKE_MODULE_PATH}/utils.cmake)
 get_third_party_list()
-set(thirdparty  Boost::boost range-v3)
+set(thirdparty  Boost::boost)
 build_library(nieel static  src/ ${thirdparty})
 
 
