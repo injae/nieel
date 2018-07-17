@@ -11,7 +11,6 @@ include(${CMAKE_MODULE_PATH}/project_maker.cmake)
 include(${CMAKE_MODULE_PATH}/utils.cmake)
 get_third_party_list()
 set(thirdparty 
-	Boost::boost
 )
 set(source 
 	src/version.cpp
