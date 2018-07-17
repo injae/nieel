@@ -1,6 +1,7 @@
 #include"program_option.h"
 #include<iostream>
 #include<sstream>
+#include"algorithm.hpp"
 
 namespace nieel 
 {
@@ -61,6 +62,7 @@ namespace nieel
                 for(const std::string& value : option.value)
                 {
                     if(option.string_key == value) continue;
+                    if(option.string_key != "command") continue;
                     //args.push_back(option.string_key);
                     args.push_back(value);
                 }
@@ -140,7 +142,7 @@ namespace nieel
         if(commands_.empty()) return output.str();
         output << description << ": \n";
         for(auto& [name, _, des] : commands_) {
-            output << "  " << name + "\t\t\t" + des << "\n";
+            output << "  " + name + "\t\t\t" + des << "\n";
         }
         return output.str();
     }

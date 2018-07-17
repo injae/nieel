@@ -3,7 +3,7 @@
 
 #include"boost/filesystem.hpp"
 #include"boost/optional.hpp"
-#include<boost/regex.hpp>
+#include<regex>
 #include<vector>
 
 #define BOOST_FILESYSTEM_NO_DEPRECATED
@@ -15,13 +15,14 @@ using boost::none;
 
 namespace nieel 
 {
-    void create_directory(std::string dir_name);
     void recursive_copy(const fs::path& src, const fs::path& dst);
     
-    std::vector<std::string>                   find_regex_files(std::string path, boost::regex filter);
+    std::vector<std::string>                   find_regex_files(std::string path, std::regex filter);
+    std::vector<std::string>                   find_files(std::string path, std::regex filter, bool is_full_path = true);
     optional<fs::path>                         find_file(const fs::path& path, const std::string file_name);
     optional<fs::path>                         reverse_find_file(const fs::path& path, const std::string file_name);
     optional<std::vector<fs::directory_entry>> file_list(const fs::path& path);
+    optional<std::vector<fs::directory_entry>> recursive_file_list(const fs::path& path);
 }
 
 #endif

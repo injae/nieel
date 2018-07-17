@@ -1,22 +1,25 @@
 package:
     name: nieel
-    version: 0.0.1
+    version: 1.0.0.0
     authors: 8687lee@gmail.com InJaeLee
     type: static 
+    thirdparty-repo:
+        - https://github.com/INJAE/cppm_packages.git
     
 compiler: 
-   type: g++ 
-   option: -std=c++17 -lstdc++fs -g -Wall -pthread -fPIC
+    type: g++ 
+    option: -std=c++17 -lstdc++fs -g -Wall -pthread -fPIC
    
 builder:  
     type: make
-    core: 1
+    luncher: ccache
+    option: -j1
     
 library:
     nieel:
         type: static
         source:
-            - src/ 
+            - src/.*
         dependencies: 
             - boost
 
@@ -28,9 +31,4 @@ thirdparty:
         url: https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.tar.gz 
         find-cmake-value: Boost
         cmake-lib-name: Boost::boost  
-    range-v3:
-       build-type: header_only
-       install: global
-       url: https://github.com/ericniebler/range-v3.git
-       cmake-lib-name: range-v3
 

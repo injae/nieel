@@ -1,4 +1,6 @@
 #include"filesystem.h"
+#include"nieel/algorithm.hpp"
+#include"nieel/string.hpp"
 
 namespace nieel
 {
@@ -8,6 +10,20 @@ namespace nieel
         std::copy(fs::directory_iterator(path), fs::directory_iterator(), std::back_inserter(list));
         return list;    
     }
+    
+    optional<std::vector<fs::directory_entry>> recursive_file_list(const fs::path& path) {
+        std::vector<fs::directory_entry> list;
+        fs::directory_iterator end_itr;
+        for( fs::directory_iterator it(path); it != end_itr; ++it) {
+           if(is_directory(it->status())) {
+               nieel::insert(list, recursive_file_list(it->path()).get());
+               continue;
+           }
+           list.push_back(*it);
+        }
+        return list;
+    }
+    
     
     optional<fs::path> find_file(const fs::path& path, const std::string file_name) {
         if(!fs::exists(path)) return none; 
@@ -21,6 +37,20 @@ namespace nieel
             if(auto f = find_file(file, file_name)) return f;
         }
         return none;
+    }
+    
+    std::vector<std::string> find_files(std::string path, std::regex filter, bool is_full_path) {
+        auto files = nieel::recursive_file_list(path).get();
+        std::vector<std::string> matching_files;
+        fs::directory_iterator end_itr;
+        for(auto it : files) {
+            std::smatch what;
+            auto file = nieel::str::erase(it.path().string(), path + "/");
+            if(!std::regex_match(file, what, filter)) continue;
+            if(!is_full_path)  matching_files.push_back(file);
+            else matching_files.push_back(it.path().string());
+        }
+        return matching_files;
     }
     
     optional<fs::path> reverse_find_file(const fs::path& path, const std::string file_name) {
@@ -37,11 +67,7 @@ namespace nieel
         return find_file(path.parent_path(), file_name);
     }
     
-    void create_directory(std::string dir_name) {
-        fs::create_directory(dir_name);
-    }
-    
-    std::vector<std::string> find_regex_files(std::string path, boost::regex filter) {
+    std::vector<std::string> find_regex_files(std::string path, std::regex filter) {
         std::vector<std::string> matching_files;
         
         boost::filesystem::directory_iterator end_itr; // Default ctor yields past-the-end
@@ -49,9 +75,9 @@ namespace nieel
         {
             // Skip if not a file
             //if( !fs::is_regular_file( i->status() ) ) continue;
-            boost::smatch what;
+            std::smatch what;
         
-            if(!boost::regex_match( it->path().filename().string(), what, filter ) ) continue;
+            if(!std::regex_match( it->path().filename().string(), what, filter ) ) continue;
         
             matching_files.push_back( it->path().filename().string());
         }   

@@ -61,7 +61,7 @@ namespace nieel
                 std::vector<std::string> get_argument_list(const std::vector<po::option>& raw);
                 std::vector<std::string> get_subarg();
                 template<typename OPTION>
-                OPTION make_sub_command() {
+                inline OPTION make_sub_command() {
                     auto opts = po::collect_unrecognized(make_parser().options, po::include_positional);
                     auto list = get_argument_list(make_parser().options);
                     for(auto& option : opts) {
