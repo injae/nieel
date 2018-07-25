@@ -1,7 +1,7 @@
-#include"program_option.h"
 #include<iostream>
 #include<sstream>
-#include"algorithm.hpp"
+#include"nieel/algorithm.hpp"
+#include"nieel/program_option.h"
 
 namespace nieel 
 {

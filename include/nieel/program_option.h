@@ -8,7 +8,7 @@
 #include<vector>
 #include<functional>
 #include<string>
-#include"algorithm.hpp"
+#include"nieel/algorithm.hpp"
 
 namespace po = boost::program_options;
 

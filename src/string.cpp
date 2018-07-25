@@ -1,4 +1,4 @@
-#include"string.hpp"
+#include"nieel/string.hpp"
 #include<vector>
 #include<cctype>
 #include<algorithm>
@@ -30,5 +30,18 @@ namespace nieel::str
         if(pos != std::string::npos) return copy_str.erase(pos, erase_str.length());
         else                         return copy_str;
         
+    }
+    
+    std::vector<std::string> split(const char* str, char c) {
+        std::vector<std::string> result;
+        do {
+            const char* begin = str;
+            while(*str != c && *str) 
+                str++;
+                
+            result.emplace_back(std::string(begin, str));
+        }while( *str++ != 0);
+        
+        return result;
     }
 }

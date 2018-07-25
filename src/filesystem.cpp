@@ -1,6 +1,7 @@
-#include"filesystem.h"
+#include"nieel/filesystem.h"
 #include"nieel/algorithm.hpp"
 #include"nieel/string.hpp"
+#include <fstream>
 
 namespace nieel
 {
@@ -102,5 +103,16 @@ namespace nieel
         else {
           std::cerr << (dst.generic_string() + " not dir or file") << std::endl; return ;
         } 
+    }
+    
+    std::string read_all(std::string path) {
+        if(fs::is_directory(path)) {
+            std::cerr << path << " is directory" << std::endl;
+            return "";
+        }
+        std::ifstream file(path.c_str());
+        return { std::istreambuf_iterator<char>(file)
+               , std::istreambuf_iterator<char>()
+               };
     }
 }

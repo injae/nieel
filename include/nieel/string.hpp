@@ -23,6 +23,7 @@ namespace nieel::str
     bool has(std::string& target, std::string_view str);
     std::string upper_first_letter(const std::string& str);
     void to_lower(std::string& str);
+    std::vector<std::string> split(const char* str, char c);
 }
 
 

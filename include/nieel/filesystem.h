@@ -3,6 +3,7 @@
 
 #include"boost/filesystem.hpp"
 #include"boost/optional.hpp"
+#include<fstream>
 #include<regex>
 #include<vector>
 
@@ -23,6 +24,7 @@ namespace nieel
     optional<fs::path>                         reverse_find_file(const fs::path& path, const std::string file_name);
     optional<std::vector<fs::directory_entry>> file_list(const fs::path& path);
     optional<std::vector<fs::directory_entry>> recursive_file_list(const fs::path& path);
+    std::string read_all(std::string path);
 }
 
 #endif

@@ -4,6 +4,7 @@
 #include<algorithm>
 #include<numeric>
 #include<iostream>
+#include<functional>
 #include<iterator>
 #include<string>
 

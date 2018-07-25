@@ -1,7 +1,7 @@
 #ifndef __NIEEL_ADOPTOR_HPP__
 #define __NIEEL_ADOPTOR_HPP__
 
-#include"algorithm.hpp"
+#include"nieel/algorithm.hpp"
 
 namespace nieel::adoptor
 {
