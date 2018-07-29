@@ -5,6 +5,10 @@
 
 namespace nieel
 {
+    void copy(const std::string src, const std::string dst) {
+        if(fs::exists(dst)) fs::remove(dst);
+        fs::copy(src, dst);
+    }
 
     optional<std::vector<fs::directory_entry>> file_list(const fs::path& path) {
         std::vector<fs::directory_entry> list;

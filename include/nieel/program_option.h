@@ -60,6 +60,7 @@ namespace nieel
                 po::options_description description() { return desc_; } 
                 std::vector<std::string> get_argument_list(const std::vector<po::option>& raw);
                 std::vector<std::string> get_subarg();
+                std::vector<std::string> get_args();
                 template<typename OPTION>
                 inline OPTION make_sub_command() {
                     auto opts = po::collect_unrecognized(make_parser().options, po::include_positional);

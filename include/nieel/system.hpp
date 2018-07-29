@@ -1,6 +1,8 @@
 #ifndef __NIEEL_OS_HPP__
 #define __NIEEL_OS_HPP__
 
+#include "nieel/util/hash.hpp"
+
 namespace nieel::os
 {
     #if defined(_WIN32)
@@ -38,6 +40,18 @@ namespace nieel::os
     #endif
         
     constexpr const char* what() { return (PLATFORM_NAME == NULL) ? "" : PLATFORM_NAME; }
+    
+    constexpr const char* prefix() {
+        switch(hash(what()))
+        {
+        case "linux"_h:
+        case "osx"_h:
+            return "/usr/local/";
+        case "windows"_h:
+            return "C:/users/";
+        }
+    }
+    
 }
 
 #endif __NIEEL_OS_HPP__

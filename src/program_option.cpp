@@ -77,6 +77,14 @@ namespace nieel
        return vm_["subargs"].as<std::vector<std::string>>();
     }
     
+    std::vector<std::string> Option::get_args() {
+        std::vector<std::string> args;
+        if(vm_.count("command")) args.push_back(vm_["command"].as<std::string>());
+        auto subargs = get_subarg();
+        args.insert(args.end(), subargs.begin(), subargs.end());
+        return args;
+    }
+    
     SubOptions& SubOptions::operator()(option::type type, std::string name
                                       ,std::function<void()> func, std::string descripte) {
         if(type == option::type::option)  {

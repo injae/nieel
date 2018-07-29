@@ -2,7 +2,7 @@ package:
     name: nieel
     version: 0.1.0
     authors: 8687lee@gmail.com InJaeLee
-    type: static 
+    type: library
     thirdparty-repo:
         - https://github.com/INJAE/cppm_packages.git
     
@@ -19,7 +19,11 @@ library:
     nieel:
         type: static
         source:
-            - src/.*
+            - src/filesystem.cpp
+            - src/program_option.cpp
+            - src/string.cpp
+            - src/url.cpp
+            - src/version.cpp
         dependencies: 
             - boost 1.55.0 ${Boost_LIBRARIES}
 binary:

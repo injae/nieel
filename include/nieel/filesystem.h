@@ -17,6 +17,7 @@ using boost::none;
 namespace nieel 
 {
     void recursive_copy(const fs::path& src, const fs::path& dst);
+    void copy(const std::string src, const std::string dst);
     
     std::vector<std::string>                   find_regex_files(std::string path, std::regex filter);
     std::vector<std::string>                   find_files(std::string path, std::regex filter, bool is_full_path = true);

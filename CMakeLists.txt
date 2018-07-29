@@ -14,12 +14,11 @@ set(thirdparty
 	${Boost_LIBRARIES}
 )
 set(source 
-	src/version.cpp
-	src/main.cpp
 	src/filesystem.cpp
+	src/program_option.cpp
 	src/string.cpp
 	src/url.cpp
-	src/program_option.cpp
+	src/version.cpp
 )
 build_library(nieel static "${source}" "${thirdparty}")
 
