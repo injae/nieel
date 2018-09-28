@@ -5,7 +5,7 @@
 
 namespace nieel::os
 {
-    #if defined(_WIN32)
+    #if   defined(_WIN32)
         #define PLATFORM_NAME "windows" // Windows
     #elif defined(_WIN64)
         #define PLATFORM_NAME "windows" // Windows
@@ -52,6 +52,27 @@ namespace nieel::os
         }
     }
     
+}
+
+namespace nieel::compiler
+{
+    #if   defined(_MSC_VER)
+         #define COMPILER_NAME "msvc"  // visual studio  
+    #elif defined(__GNUC__)
+	 #define COMPILER_NAME "gcc"   // gcc
+    #elif defined(__clang__)
+	 #define COMPILER_NAME "clang" // clang
+    #elif defined(__EMSCRIPTEN__)
+	 #define COMPILER_NAME "wsm"   // web assembly
+    #elif defined(__MINGW32__) "mingw"  
+	 #define COMPILER_NAME "mingw" // mingw 32bit mingw-w64 32bit
+    #elif defined(__MINGW64__) "mingw" 
+	 #define COMPILER_NAME "mingw" // mingw-w64 64bit
+    #else
+	 #define COMPILER_NAME NULL    // can't find 
+    #endif
+
+    constexpr const char* what() { return (COMPILER_NAME == NULL) ? "" : COMPILER_NAME; }
 }
 
 #endif __NIEEL_OS_HPP__

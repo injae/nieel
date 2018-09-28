@@ -60,29 +60,26 @@ namespace nieel
     
     optional<fs::path> reverse_find_file(const fs::path& path, const std::string file_name) {
         if(!fs::exists(path)) return none; 
-        
         auto list = file_list(path);
         if(!list) return none; 
-        
-        for(const auto& file : list.get()) {
-          if(file.path().filename() == file_name) return file.path();
+        for(const auto& file : *list) {
+            if(file.path().filename() == file_name) return file.path();
+            if(file.path().filename() == "/")       return none;
         }
-        
-        if(path == path.root_directory()) return none;
-        return find_file(path.parent_path(), file_name);
+        return reverse_find_file(path.parent_path(), file_name);
     }
     
     std::vector<std::string> find_regex_files(std::string path, std::regex filter) {
         std::vector<std::string> matching_files;
         
-        boost::filesystem::directory_iterator end_itr; // Default ctor yields past-the-end
+        fs::directory_iterator end_itr; // Default ctor yields past-the-end
         for( fs::directory_iterator it( path ); it != end_itr; ++it)
         {
             // Skip if not a file
             //if( !fs::is_regular_file( i->status() ) ) continue;
             std::smatch what;
-        
-            if(!std::regex_match( it->path().filename().string(), what, filter ) ) continue;
+            auto filename = it->path().filename().string();
+            if(!std::regex_match(filename , what, filter ) ) continue;
         
             matching_files.push_back( it->path().filename().string());
         }   

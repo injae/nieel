@@ -9,11 +9,11 @@ package:
 compiler: 
     type: g++ 
     luncher: ccache
-    option: -std=c++17 -lstdc++fs -g -Wall -pthread -fPIC
+    option: -std=c++17 -g -Wall -pthread -fPIC
    
 builder:  
-    type: make
-    option: -j1
+    type: ninja
+    option: -j4
     
 library:
     nieel:

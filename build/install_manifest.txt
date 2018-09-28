@@ -1,0 +1,15 @@
+/usr/local/lib/libnieel.a
+/usr/local/include/nieel/system.hpp
+/usr/local/include/nieel/adoptor.hpp
+/usr/local/include/nieel/program_option.h
+/usr/local/include/nieel/string.hpp
+/usr/local/include/nieel/version.h
+/usr/local/include/nieel/filesystem.h
+/usr/local/include/nieel/algorithm.hpp
+/usr/local/include/nieel/util/hash.hpp
+/usr/local/include/nieel/optional.hpp
+/usr/local/include/nieel/url.h
+/usr/local/lib/cmake/nieel/nieel-config.cmake
+/usr/local/lib/cmake/nieel/nieel-config-noconfig.cmake
+/usr/local/lib/cmake/nieel/nieel-config-version.cmake
+/usr/local/bin/nieel-main

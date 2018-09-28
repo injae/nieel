@@ -1,0 +1,19 @@
+# ninja log v5
+1	962	1538056517605027336	CMakeFiles/nieel.dir/src/version.cpp.o	512d0c49306d9e89
+0	1075	1538056517889499240	CMakeFiles/nieel.dir/src/string.cpp.o	7f044e53255bf89a
+0	3249	1538056520108723690	CMakeFiles/nieel.dir/src/url.cpp.o	92dd409699a8cdfb
+0	18529	1538056535081512151	CMakeFiles/nieel-main.dir/src/main.cpp.o	8eb555c2ce4d08aa
+0	18592	1538056535453737241	CMakeFiles/nieel.dir/src/program_option.cpp.o	c1c5f6de67a7bf08
+4	2187	1538056707473120825	CMakeFiles/nieel.dir/src/version.cpp.o	9bf923c2d0286655
+3	2629	1538056707910109034	CMakeFiles/nieel.dir/src/string.cpp.o	af44ea14d5ef5114
+4	52091	1538056757338069428	CMakeFiles/nieel.dir/src/url.cpp.o	51e871df0cec5ab3
+2	52326	1538056757598240506	CMakeFiles/nieel-main.dir/src/main.cpp.o	bee00e475c6a3f07
+2	52795	1538056758070549786	CMakeFiles/nieel.dir/src/program_option.cpp.o	98cdb75922fb1fbb
+2	1924	1538057294349610508	CMakeFiles/nieel.dir/src/filesystem.cpp.o	69952a053bc636bc
+1924	2189	1538057294625748584	libnieel.a	2a0c2c8a34edd52c
+2189	2500	1538057294937904671	nieel-main	ed80d6ea3f1c159f
+4	2139	1538132897848214004	CMakeFiles/nieel.dir/src/filesystem.cpp.o	69952a053bc636bc
+2139	2430	1538132898141780200	libnieel.a	2a0c2c8a34edd52c
+4	3869	1538132899576636887	CMakeFiles/nieel-main.dir/src/main.cpp.o	bee00e475c6a3f07
+3869	3944	1538132899661011605	nieel-main	ed80d6ea3f1c159f
+2	143	0	CMakeFiles/install.util	1b6fe501599bf448
